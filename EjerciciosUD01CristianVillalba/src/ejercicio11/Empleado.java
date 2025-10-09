@@ -1,19 +1,18 @@
 package ejercicio11;
 
-public abstract class Empleado {
+public class Empleado {
 
     private String nombre;
     private double porcExtra;
     private double sueldoHora;
     private double horasTrab;
-    private double horasExtra;
 
-    public Empleado(String nombre, double porcExtra, double sueldoHora, double horasTrab, double horasExtra) {
+    public Empleado(String nombre, double porcExtra, double sueldoHora, double horasTrab) {
         this.nombre = nombre;
         this.porcExtra = porcExtra;
         this.sueldoHora = sueldoHora;
         this.horasTrab = horasTrab;
-        this.horasExtra = horasExtra;
+
     }
 
     public String getNombre() {
@@ -48,17 +47,30 @@ public abstract class Empleado {
         this.horasTrab = horasTrab;
     }
 
-    public double getHorasExtra() {
-        return horasExtra;
-    }
-
-    public void setHorasExtra(double horasExtra) {
-        this.horasExtra = horasExtra;
+    @Override
+    public String toString() {
+        return "Empleado{" +
+                "nombre='" + nombre + '\'' +
+                ", porcExtra=" + porcExtra +
+                ", sueldoHora=" + sueldoHora +
+                ", horasTrab=" + horasTrab +
+                '}';
     }
 
     public double calcularSueldoBase(){
         return sueldoHora*horasTrab;
     };
 
-    public abstract double calcularExtra();
+    public double calcularExtra(){
+        if(horasTrab>40){
+            return (horasTrab-40)*(sueldoHora+(sueldoHora*(porcExtra/100)));
+        }else{
+            return 0;
+        }
+
+    };
+
+    public double calcularSueldoTotal(){
+          return calcularSueldoBase()+calcularExtra();
+    };
 }

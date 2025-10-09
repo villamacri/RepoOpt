@@ -3,8 +3,8 @@ package ejercicio11;
 public class ProgJunior extends Empleado{
 
 
-    public ProgJunior(String nombre, double porcExtra, double sueldoHora, double horasTrab, double horasExtra) {
-        super(nombre, porcExtra, sueldoHora, horasTrab, horasExtra);
+    public ProgJunior(String nombre, double porcExtra, double sueldoHora, double horasTrab) {
+        super(nombre, porcExtra, sueldoHora, horasTrab);
     }
 
     @Override
@@ -14,6 +14,6 @@ public class ProgJunior extends Empleado{
 
     @Override
     public double calcularExtra() {
-        return calcularSueldoBase()+(getSueldoHora()*getHorasExtra()*(getPorcExtra()/100));
+        return super.calcularExtra();
     }
 }
