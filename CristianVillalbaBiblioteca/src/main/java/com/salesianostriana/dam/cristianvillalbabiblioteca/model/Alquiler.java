@@ -23,7 +23,9 @@ public class Alquiler {
 	private Long id;
 	
 	
-	private LocalDate fechaInicio, fechaDevolucionPrevista;
+	private LocalDate fechaInicio, fechaDevolucionPrevista, fechaDevolucionReal;
+	private double precioTotal;
+	private boolean devuelto;
 	
 	@ManyToOne
 	@JoinColumn(foreignKey = @ForeignKey(name="fk_alquiler_libro"))

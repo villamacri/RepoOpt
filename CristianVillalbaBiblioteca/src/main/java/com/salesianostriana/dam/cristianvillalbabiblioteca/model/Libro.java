@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class Libro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
 	private String titulo, autor, estado;
 	private int anioPublicacion; 

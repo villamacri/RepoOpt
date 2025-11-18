@@ -1,6 +1,9 @@
 package com.salesianostriana.dam.cristianvillalbabiblioteca.servicio;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,16 @@ public class AlquilerServicio extends BaseImpl<Alquiler, Long, AlquilerRepositor
 	private final LibroRepositorio libroRepositorio;
 	private final LectorRepositorio lectorRepositorio;
 	
+	
+	public boolean libroDisponible(Long libroId, LocalDate inicio, LocalDate fin) {
+		List<Alquiler> alquileres=alquilerRepositorio.findByDevueltoFalse();
+		return alquileres.stream()
+				.filter(a -> a.getLibro().getId().equals(libroId))
+				.noneMatch(a ->
+						!(fin.isBefore(a.getFechaInicio()) || inicio.isAfter(a.getFechaDevolucionPrevista()))
+						);
+		
+	}
 	public Alquiler crearAlquiler(Long libroId, Long lectorId, LocalDate fechaInicio, LocalDate fechaFin) {
 		Libro libro = libroRepositorio.findById(lectorId)
 				.orElseThrow(() -> new RuntimeException("Libro no encontrado"));
@@ -30,6 +43,46 @@ public class AlquilerServicio extends BaseImpl<Alquiler, Long, AlquilerRepositor
 		if(!libroDisponible(libroId, fechaInicio, fechaFin)) {
 			throw new  RuntimeException("El libro no está disponible en esas fechas");
 		}
+		
+		long dias = ChronoUnit.DAYS.between(fechaInicio, fechaFin);
+		if(dias <= 0) {
+			throw new RuntimeException("La fecha de devolución no puede ser posterior a la fecha de inicio");
+		}
+		
+		Alquiler alquiler = new Alquiler();
+		
+		alquiler.setLibro(libro);
+		alquiler.setLector(lector);
+		alquiler.setFechaInicio(fechaInicio);
+		alquiler.setFechaDevolucionPrevista(fechaFin);
+		alquiler.setPrecioTotal((libro.getCategoria().getPrecioBase())*dias);
+		alquiler.setDevuelto(false);
+		
+		libro.setEstado("ALQUILADO");
+		libroRepositorio.save(libro);
+		
+		return alquilerRepositorio.save(alquiler);
+	}
+	
+	public Optional<Alquiler>devolverLibro(Long alquilerId){
+		Optional<Alquiler>alquilerOpt = alquilerRepositorio.findById(alquilerId);
+		if(alquilerOpt.isEmpty()) return Optional.empty();
+		
+		Alquiler alquiler = alquilerOpt.get();
+		alquiler.setDevuelto(true);
+		alquiler.setFechaDevolucionReal(LocalDate.now());
+		
+		long retraso = ChronoUnit.DAYS.between(alquiler.getFechaDevolucionPrevista(), LocalDate.now());
+		if(retraso > 0) {
+			double recargo = retraso * (alquiler.getLibro().getCategoria().getPrecioBase()*0.2);
+			alquiler.setPrecioTotal(alquiler.getPrecioTotal()+recargo);
+		}
+		
+		Libro libro = alquiler.getLibro();
+		libro.setEstado("DISPONIBLE");
+		libroRepositorio.save(libro);
+		
+		return Optional.of(alquilerRepositorio.save(alquiler));
 	}
 	
 }

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class Lector {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
 	private String nombre, email, telefono;
 	
