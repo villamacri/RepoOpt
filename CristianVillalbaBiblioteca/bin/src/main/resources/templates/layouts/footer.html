@@ -1,0 +1,39 @@
+<div th:fragment="footer">
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">
+                        <i class="bi bi-book-fill me-2"></i>Biblioteca Municipal
+                    </h5>
+                    <p>
+                        Sistema de gestión integral para bibliotecas. 
+                        Administra libros, lectores, préstamos y más de forma eficiente.
+                    </p>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Enlaces</h5>
+                    <ul class="list-unstyled mb-0">
+                        <li><a th:href="@{/libros}" class="text-dark text-decoration-none">Catálogo</a></li>
+                        <li><a th:href="@{/lectores}" class="text-dark text-decoration-none">Lectores</a></li>
+                        <li><a th:href="@{/alquileres}" class="text-dark text-decoration-none">Préstamos</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Contacto</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-envelope me-2"></i>info@biblioteca.com</li>
+                        <li><i class="bi bi-telephone me-2"></i>+34 123 456 789</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center p-3 bg-primary text-white">
+            © 2025 Biblioteca Municipal | Desarrollado con 
+            <i class="bi bi-heart-fill text-danger"></i> usando Spring Boot + Thymeleaf + Bootstrap
+        </div>
+    </footer>
+</div>

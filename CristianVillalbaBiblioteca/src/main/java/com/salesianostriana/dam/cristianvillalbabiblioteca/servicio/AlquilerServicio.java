@@ -35,7 +35,7 @@ public class AlquilerServicio extends BaseImpl<Alquiler, Long, AlquilerRepositor
 		
 	}
 	public Alquiler crearAlquiler(Long libroId, Long lectorId, LocalDate fechaInicio, LocalDate fechaFin) {
-		Libro libro = libroRepositorio.findById(lectorId)
+		Libro libro = libroRepositorio.findById(libroId)
 				.orElseThrow(() -> new RuntimeException("Libro no encontrado"));
 		Lector lector = lectorRepositorio.findById(lectorId)
 				.orElseThrow(() -> new RuntimeException("Lector no encontrado"));
@@ -46,7 +46,7 @@ public class AlquilerServicio extends BaseImpl<Alquiler, Long, AlquilerRepositor
 		
 		long dias = ChronoUnit.DAYS.between(fechaInicio, fechaFin);
 		if(dias <= 0) {
-			throw new RuntimeException("La fecha de devolución no puede ser posterior a la fecha de inicio");
+			throw new RuntimeException("La fecha de devolución debe ser posterior a la fecha de inicio");
 		}
 		
 		Alquiler alquiler = new Alquiler();
@@ -83,6 +83,34 @@ public class AlquilerServicio extends BaseImpl<Alquiler, Long, AlquilerRepositor
 		libroRepositorio.save(libro);
 		
 		return Optional.of(alquilerRepositorio.save(alquiler));
+	}
+	
+	public Optional<Alquiler>cancelarAlquiler(Long alquilerId){
+		Optional<Alquiler>alquilerOpt=alquilerRepositorio.findById(alquilerId);
+		if(alquilerOpt.isEmpty()) 
+			return Optional.empty();
+		
+		Alquiler alquiler=alquilerOpt.get();
+		
+		if(alquiler.getFechaInicio().isAfter(LocalDate.now())) {
+			Libro libro = alquiler.getLibro();
+			
+			libro.setEstado("DISPONIBLE");
+			libroRepositorio.save(libro);
+			
+			alquilerRepositorio.deleteById(alquilerId);
+			return Optional.of(alquiler);
+		}else {
+			throw new RuntimeException("No se puede cancelar un alquiler ya iniciado");
+		}
+	}
+	
+	public List<Alquiler> findByLectorId(Long lectorId){
+		return alquilerRepositorio.findByLectorId(lectorId);
+	}
+	
+	public List<Alquiler>findAlquileresActivos(){
+		return alquilerRepositorio.findByDevueltoFalse();
 	}
 	
 }
