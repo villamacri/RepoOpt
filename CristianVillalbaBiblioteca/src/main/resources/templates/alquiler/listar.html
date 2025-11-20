@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layouts/base :: layout(~{::contenido})}">
+      th:replace="/layouts/base">
 <body>
     <div th:fragment="contenido">
         <div class="d-flex justify-content-between align-items-center mb-3">
@@ -15,16 +15,23 @@
                 <tr>
                     <th>Libro</th>
                     <th>Lector</th>
-                    <th>Fecha Fin</th>
-                    <th>Acciones</th>
+					<th class="text-center">Inicio</th>
+                    <th class="text-center">Fecha Fin</th>
+                    <th class="text-end pe-4">Precio</th>
+					<th class="text-center">Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="alquiler : ${Alquileres}">
-                    <td th:text="${alquiler.libro.titulo}">Titulo</td>
-                    <td th:text="${alquiler.lector.nombre}">Nombre</td>
-                    <td th:text="${alquiler.fechaFin}">Fecha</td>
-                    <td>
+                <tr th:each="alquiler : ${alquileres}">
+                    <td th:text="${alquiler.libro.titulo}"></td>
+                    <td th:text="${alquiler.lector.nombre}"></td>
+					<td class="text-center" th:text="${alquiler.fechaInicio}"></td>
+                    <td class="text-center" th:text="${alquiler.fechaDevolucionPrevista}"></td>
+					
+					<td class="text-end fw-bold text-primary"
+						th:text="${alquiler.precioTotal != null} ? ${#numbers.formatDecimal(alquiler.precioTotal, 1, 2) + ' €'} : '0.00 €'">
+					</td>
+                    <td class="text-center">
                         <a th:href="@{/alquileres/{id}(id=${alquiler.id})}" class="btn btn-sm btn-info">
                             Ver
                         </a>
@@ -38,7 +45,7 @@
             </tbody>
         </table>
         
-        <div th:if="${#lists.isEmpty(Alquileres)}" class="alert alert-info">
+        <div th:if="${#lists.isEmpty(alquileres)}" class="alert alert-info">
             No hay libros alquilados actualmente.
         </div>
     </div>

@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +18,7 @@ import com.salesianostriana.dam.cristianvillalbabiblioteca.servicio.LibroServici
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/alquiler")
+@RequestMapping("/alquileres")
 @RequiredArgsConstructor
 public class AlquilerController {
 
@@ -29,7 +28,7 @@ public class AlquilerController {
 	
 	@GetMapping("/")
 	public String listarAlquileres(Model model) {
-		model.addAttribute("Alquileres", alquilerServicio.findAlquileresActivos());
+		model.addAttribute("alquileres", alquilerServicio.findAlquileresActivos());
 		return "alquiler/listar";
 	}
 	
@@ -49,6 +48,9 @@ public class AlquilerController {
 			@RequestParam String fechaFin,
 			Model model) {
 		try {
+			if (fechaInicio == null || fechaInicio.isEmpty() || fechaFin == null || fechaFin.isEmpty()) {
+	            throw new RuntimeException("Las fechas de inicio y fin son obligatorias.");
+	        }
 			LocalDate inicio = LocalDate.parse(fechaInicio);
 			LocalDate fin = LocalDate.parse(fechaFin);
 			

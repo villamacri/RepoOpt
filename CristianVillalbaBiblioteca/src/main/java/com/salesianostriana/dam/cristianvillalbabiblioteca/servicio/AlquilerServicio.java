@@ -41,7 +41,15 @@ public class AlquilerServicio extends BaseImpl<Alquiler, Long, AlquilerRepositor
 				.orElseThrow(() -> new RuntimeException("Lector no encontrado"));
 		
 		if(!libroDisponible(libroId, fechaInicio, fechaFin)) {
-			throw new  RuntimeException("El libro no está disponible en esas fechas");
+			throw new RuntimeException("El libro no está disponible en esas fechas");
+		}
+		
+		if(lector.getFechaFinSancion() != null && lector.getFechaFinSancion().isAfter(LocalDate.now())) {
+			throw new RuntimeException("El lector está sancionado hasta el " + lector.getFechaFinSancion());
+		}
+		
+		if(alquilerRepositorio.countByLectorIdAndDevueltoFalse(lectorId)>=3) {
+			throw new RuntimeException("El lector ya tiene 3 libros sin devolver. Límite alcanzado");
 		}
 		
 		long dias = ChronoUnit.DAYS.between(fechaInicio, fechaFin);
@@ -73,9 +81,15 @@ public class AlquilerServicio extends BaseImpl<Alquiler, Long, AlquilerRepositor
 		alquiler.setFechaDevolucionReal(LocalDate.now());
 		
 		long retraso = ChronoUnit.DAYS.between(alquiler.getFechaDevolucionPrevista(), LocalDate.now());
+		long diasSancion = retraso*2;
 		if(retraso > 0) {
 			double recargo = retraso * (alquiler.getLibro().getCategoria().getPrecioBase()*0.2);
 			alquiler.setPrecioTotal(alquiler.getPrecioTotal()+recargo);
+			
+			Lector lector=alquiler.getLector();
+			
+			lector.setFechaFinSancion(LocalDate.now().plusDays(diasSancion));
+			lectorRepositorio.save(lector);
 		}
 		
 		Libro libro = alquiler.getLibro();
@@ -87,7 +101,7 @@ public class AlquilerServicio extends BaseImpl<Alquiler, Long, AlquilerRepositor
 	
 	public Optional<Alquiler>cancelarAlquiler(Long alquilerId){
 		Optional<Alquiler>alquilerOpt=alquilerRepositorio.findById(alquilerId);
-		if(alquilerOpt.isEmpty()) 
+		if(alquilerOpt.isEmpty())
 			return Optional.empty();
 		
 		Alquiler alquiler=alquilerOpt.get();

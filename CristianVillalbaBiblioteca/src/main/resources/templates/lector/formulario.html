@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layouts/base">
+
+<body>
+    <div th:fragment="contenido">
+        <div class="container my-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card shadow">
+                        
+                        <div class="card-header bg-success text-white">
+                            <h3 class="mb-0" th:text="${lector.id != null} ? 'Editar Lector' : 'Nuevo Lector'">
+                                Nuevo Lector
+                            </h3>
+                        </div>
+                        
+                        <div class="card-body">
+                            <form th:action="@{/lectores/guardar}" th:object="${lector}" method="post">
+                                
+                                <input type="hidden" th:field="*{id}" />
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Nombre Completo</label>
+                                    <input type="text" class="form-control" th:field="*{nombre}" required placeholder="Ej: Juan Pérez">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" th:field="*{email}" required placeholder="juan@ejemplo.com">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Teléfono</label>
+                                    <input type="text" class="form-control" th:field="*{telefono}" placeholder="Ej: 600123456">
+                                </div>
+                                
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-success btn-lg">Guardar Lector</button>
+                                    <a th:href="@{/lectores/}" class="btn btn-secondary">Cancelar</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

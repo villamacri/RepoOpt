@@ -18,7 +18,6 @@
                 </div>
             </div>
 
-            <!-- Cards de Funcionalidades -->
             <div class="row g-4 mb-5">
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 shadow-sm hover-card">
@@ -30,7 +29,7 @@
                             <p class="card-text text-muted">
                                 Administra el catálogo completo de la biblioteca. Añade, edita y consulta información de libros.
                             </p>
-                            <a th:href="@{/libros}" class="btn btn-primary">
+                            <a th:href="@{/libros/}" class="btn btn-primary">
                                 <i class="bi bi-arrow-right me-1"></i>Ir a Libros
                             </a>
                         </div>
@@ -47,7 +46,7 @@
                             <p class="card-text text-muted">
                                 Registra y administra los datos de los lectores de la biblioteca.
                             </p>
-                            <a th:href="@{/lectores}" class="btn btn-success">
+                            <a th:href="@{/lectores/}" class="btn btn-success">
                                 <i class="bi bi-arrow-right me-1"></i>Ir a Lectores
                             </a>
                         </div>
@@ -64,7 +63,7 @@
                             <p class="card-text text-muted">
                                 Controla los préstamos y devoluciones de libros de manera sencilla.
                             </p>
-                            <a th:href="@{/alquileres}" class="btn btn-warning">
+                            <a th:href="@{/alquileres/}" class="btn btn-warning">
                                 <i class="bi bi-arrow-right me-1"></i>Ir a Alquileres
                             </a>
                         </div>
@@ -81,51 +80,10 @@
                             <p class="card-text text-muted">
                                 Organiza los libros por categorías para facilitar su búsqueda.
                             </p>
-                            <a th:href="@{/categorias}" class="btn btn-info">
+                            <a th:href="@{/categorias/}" class="btn btn-info">
                                 <i class="bi bi-arrow-right me-1"></i>Ir a Categorías
                             </a>
                         </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 shadow-sm hover-card">
-                        <div class="card-body text-center">
-                            <div class="mb-3">
-                                <i class="bi bi-person-badge-fill text-danger" style="font-size: 3rem;"></i>
-                            </div>
-                            <h5 class="card-title">Bibliotecarios</h5>
-                            <p class="card-text text-muted">
-                                Administra el personal que gestiona la biblioteca.
-                            </p>
-                            <a th:href="@{/bibliotecarios}" class="btn btn-danger">
-                                <i class="bi bi-arrow-right me-1"></i>Ir a Bibliotecarios
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 shadow-sm hover-card bg-light">
-                        <div class="card-body text-center d-flex flex-column justify-content-center">
-                            <div class="mb-3">
-                                <i class="bi bi-graph-up text-secondary" style="font-size: 3rem;"></i>
-                            </div>
-                            <h5 class="card-title">Estadísticas</h5>
-                            <p class="card-text text-muted">
-                                Próximamente: Visualiza estadísticas y reportes de la biblioteca.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Call to Action -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="alert alert-info text-center" role="alert">
-                        <i class="bi bi-info-circle-fill me-2"></i>
-                        <strong>¿Nuevo en el sistema?</strong> Comienza explorando el catálogo de libros o registra un nuevo lector.
                     </div>
                 </div>
             </div>

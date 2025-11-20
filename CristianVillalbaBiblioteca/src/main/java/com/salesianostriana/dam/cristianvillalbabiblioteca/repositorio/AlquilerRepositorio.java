@@ -18,4 +18,6 @@ public interface AlquilerRepositorio extends JpaRepository<Alquiler, Long>{
 	List<Alquiler> findByDevueltoTrue();
 	
 	List<Alquiler> findByFechaInicioBetween(LocalDate inicio, LocalDate fin);
+	
+	int countByLectorIdAndDevueltoFalse(Long lectorId);
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layouts/base :: layout(~{::contenido})}">
+      th:replace="layouts/base">
 <body>
     <div th:fragment="contenido">
         <div class="card mt-4">
@@ -11,7 +11,14 @@
                 <h5 class="card-title">Libro: <span th:text="${alquiler.libro.titulo}"></span></h5>
                 <p class="card-text"><strong>Lector:</strong> <span th:text="${alquiler.lector.nombre}"></span></p>
                 <p class="card-text"><strong>Fecha Inicio:</strong> <span th:text="${alquiler.fechaInicio}"></span></p>
-                <p class="card-text"><strong>Fecha Fin (Prevista):</strong> <span th:text="${alquiler.fechaFin}"></span></p>
+                <p class="card-text"><strong>Fecha Fin (Prevista):</strong> <span th:text="${alquiler.fechaDevolucionPrevista}"></span></p>
+				<div class="alert alert-warning mt-3">
+				    <h4 class="alert-heading h5">Precio Total</h4>
+				    <p class="mb-0 fs-4 fw-bold" 
+				       th:text="${#numbers.formatDecimal(alquiler.precioTotal, 1, 2) + ' €'}">
+				       0.00 €
+				    </p>
+				</div>
                 
                 <a th:href="@{/alquileres/}" class="btn btn-secondary">Volver al listado</a>
             </div>

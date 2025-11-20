@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layouts/base">
+
+<body>
+    <div th:fragment="contenido">
+        <div class="container my-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card shadow">
+                        <div class="card-header bg-info text-white">
+                            <h3 class="mb-0" th:text="${categoria.id != null} ? 'Editar Categoría' : 'Nueva Categoría'"></h3>
+                        </div>
+                        <div class="card-body">
+                            <form th:action="@{/categorias/guardar}" th:object="${categoria}" method="post">
+                                <input type="hidden" th:field="*{id}" />
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" th:field="*{nombre}" required placeholder="Ej: Novela Histórica">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Precio Base (€)</label>
+                                    <input type="number" step="0.01" class="form-control" th:field="*{precioBase}" required>
+                                    <div class="form-text">Precio base por día de alquiler para libros de esta categoría.</div>
+                                </div>
+
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-info text-white">Guardar</button>
+                                    <a th:href="@{/categorias/}" class="btn btn-secondary">Cancelar</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
