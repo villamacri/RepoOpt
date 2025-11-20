@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/base :: layout(~{::contenido})}">
+
+<body>
+
+    <div th:fragment="contenido">
+    
+        <h2>Crear Nuevo Alquiler</h2>
+        
+        <form method="post" th:action="@{/alquileres/nuevo}" class="mt-4">
+            
+            <div class="mb-3">
+                <label class="form-label">Libro:</label>
+                <select name="libroId" class="form-select">
+                    <option th:each="l : ${libros}" 
+                            th:value="${l.id}" 
+                            th:text="${l.titulo}"></option>
+                </select>
+            </div>
+        
+            <div class="mb-3">
+                <label class="form-label">Lector:</label>
+                <select name="lectorId" class="form-select">
+                    <option th:each="lec : ${lectores}"
+                            th:value="${lec.id}"
+                            th:text="${lec.nombre}"></option>
+                </select>
+            </div>
+        
+            <div class="mb-3">
+                <label class="form-label">Fecha inicio:</label>
+                <input type="date" name="fechaInicio" class="form-control">
+            </div>
+        
+            <div class="mb-3">
+                <label class="form-label">Fecha fin:</label>
+                <input type="date" name="fechaFin" class="form-control">
+            </div>
+        
+            <button type="submit" class="btn btn-primary">Crear alquiler</button>
+            
+            <div th:if="${error}" class="alert alert-danger mt-3">
+                <span th:text="${error}"></span>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

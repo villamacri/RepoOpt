@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/base :: layout(~{::contenido})}">
+<body>
+    <div th:fragment="contenido">
+        <div class="card mt-4">
+            <div class="card-header bg-info text-white">
+                <h3>Detalle del Alquiler</h3>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Libro: <span th:text="${alquiler.libro.titulo}"></span></h5>
+                <p class="card-text"><strong>Lector:</strong> <span th:text="${alquiler.lector.nombre}"></span></p>
+                <p class="card-text"><strong>Fecha Inicio:</strong> <span th:text="${alquiler.fechaInicio}"></span></p>
+                <p class="card-text"><strong>Fecha Fin (Prevista):</strong> <span th:text="${alquiler.fechaFin}"></span></p>
+                
+                <a th:href="@{/alquileres/}" class="btn btn-secondary">Volver al listado</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

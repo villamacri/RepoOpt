@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/base :: layout(~{::contenido})}">
+<body>
+    <div th:fragment="contenido">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Alquileres Activos</h2>
+            <a th:href="@{/alquileres/nuevo}" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Nuevo Alquiler
+            </a>
+        </div>
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Libro</th>
+                    <th>Lector</th>
+                    <th>Fecha Fin</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="alquiler : ${Alquileres}">
+                    <td th:text="${alquiler.libro.titulo}">Titulo</td>
+                    <td th:text="${alquiler.lector.nombre}">Nombre</td>
+                    <td th:text="${alquiler.fechaFin}">Fecha</td>
+                    <td>
+                        <a th:href="@{/alquileres/{id}(id=${alquiler.id})}" class="btn btn-sm btn-info">
+                            Ver
+                        </a>
+                        
+                        <form th:action="@{/alquileres/devolver/{id}(id=${alquiler.id})}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-sm btn-success" 
+                                    onclick="return confirm('¿Confirmar devolución?')">Devolver</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div th:if="${#lists.isEmpty(Alquileres)}" class="alert alert-info">
+            No hay libros alquilados actualmente.
+        </div>
+    </div>
+</body>
+</html>
