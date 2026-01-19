@@ -26,6 +26,10 @@ public class Principal {
                 valid=true;
             } catch (TemperaturaLimitException e) {
                 System.err.println(e.getMessage());
+            }catch (NumberFormatException e){
+                System.err.println("El valor introducido no es un número");
+            }catch (Exception e){
+                System.err.println("Error inesperado");
             }
         }
 
