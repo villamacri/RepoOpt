@@ -1,7 +1,9 @@
-package PACKAGE_NAME;
-
 public class MiException extends RuntimeException {
-  public MiException(String message) {
-    super(message);
-  }
+    public MiException() {
+        super();
+    }
+
+    public MiException(String info){
+        super(info);
+    }
 }

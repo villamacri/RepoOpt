@@ -1,4 +1,4 @@
-package PACKAGE_NAME;
-
 public class ClaseUso {
+
+    public void lanzar() throws MiException{}
 }
