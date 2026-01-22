@@ -1,15 +1,16 @@
 package ejercicio05;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class Operaciones {
 
-    private final HashSet<Integer>listaNumeros;
+    private final Set<Integer>listaNumeros;
+    private List<Cuenta> listadoCuentas;
 
-    public Operaciones(HashSet<Integer> listaNumeros) {
+    public Operaciones(Set<Integer> listaNumeros, List<Cuenta> listadoCuentas) {
         this.listaNumeros = listaNumeros;
+        this.listadoCuentas=listadoCuentas;
     }
 
     public int generarNumero() throws NumeroRepetidoException{
@@ -22,4 +23,28 @@ public class Operaciones {
         }
         return num;
     }
+
+    public void setearId(int idBuscado, int idNuevo) throws AsignacionIdException{
+        if(listadoCuentas.contains(listadoCuentas.get(idNuevo)))
+            throw new AsignacionIdException("El id ya está asignado a otra cuenta");
+
+            listadoCuentas.get(idBuscado).setId(idNuevo);
+    }
+
+    public void comprobarImpares()throws NumeroImparException{
+        for (Integer numero : listaNumeros) {
+            if(numero % 2 != 0){
+                throw new NumeroImparException("El número"+ numero + "es impar");
+            }
+        }
+    }
+
+    public void comprobarSaldo (double saldo, int id) throws CantidadBizzumException{
+        if(saldo > listadoCuentas.get(id).getSaldo()){
+            throw new CantidadBizzumException("El saldo pedido es mayor al disponible");
+        }
+    }
+
+
+
 }
