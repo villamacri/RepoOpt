@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Principal {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         Scanner sc=new Scanner(System.in);
 
@@ -29,11 +29,14 @@ public class Principal {
 
                     System.out.println("carrera: ");
                     carrera=sc.nextLine();
+
+                    fS.write(nombre + "," + posicion + "," + tiempo + "," + carrera);
+                    fS.newLine();
                 }
             }while (nombre.length()>0);
         }catch (IOException e){
-            System.out.println("Error al introducir los datos");
-        }finally{
+            System.err.println("Error al introducir los datos");
+        } finally {
             fS.close();
             System.out.println("Adiós");
         }
