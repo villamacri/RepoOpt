@@ -1,0 +1,8 @@
+Producto	Ud		Precio Unitario		IVA		Importe
+Leche		3		1,45€			21,00%		4,36€
+Donuts		5		2,57€			21,00%		12,86€
+Tv LG		1		580,80€			21,00%		580,80€
+Patín		2		302,50€			21,00%		605,00€
+
+							   Subtotal:    1203,01€
+
